@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+
+    <script src="libs/modernizr-custom2.js"></script>
+
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            function show_map(position) {
+                console.log(position);
+                document.getElementById('position').innerHTML += position.coords.latitude + " " + position.coords.longitude;
+                initMap(position.coords.latitude, position.coords.longitude);
+
+            }
+
+            if (Modernizr.geolocation) {
+                console.log("API Geolocation present");
+                navigator.geolocation.getCurrentPosition(show_map, errorHandler, { maximumAge: 60000 });
+
+                // supported
+            } else {
+                console.log("API Geolocation not present");
+                // not-supported
+            }
+
+            function initMap(latitude, longitude) {
+                // Create a map object and specify the DOM element for display.
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: latitude, lng: longitude },
+                    zoom: 15
+                });
+            }
+
+            function errorHandler(error) {
+                console.log(error);
+            }
+
+        })
+
+
+
+
+
+    </script>
+
+</head>
+
+<body>
+    <span id="position">Votre position : </span>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js" async defer></script>
+</body>
+
+</html>
