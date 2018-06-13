@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+        
+
+        /*
+        */
+        #para1 {
+            background-color: aqua
+            }
+        
+
+        </style>
+
+
+    <script type="text/javascript">
+    
+    ' use strict'
+    var var1 = 12;
+    console.log(var1);
+    var1=15;
+
+        var direBonjour = function() {
+            alert("Hello world");
+        }
+
+    var var2 = {
+        "voiture": "Ford",
+        "action" : direBonjour
+
+    };
+
+    
+    var start = function () {
+        var tmp = document.getElementById('para2');
+        console.log(tmp);
+        console.log(tmp.innerText);
+        // tmp.innexText = "nouvelle valeur";
+        tmp.innerHTML = "nouvelle valeur";
+
+    }
+
+
+    // var2.action();
+
+    console.log(var2.voiture);
+    </script>
+    
+    
+    </head>
+
+<body >
+    <p style="background-color: blueviolet">premier paragraphe</p>
+    <p id='para2'>second paragraphe</p>
+    <p onclick="alert('Click'); start();">
+        <span> Span1 </span>
+        <span class="test">Span 2</span>
+    </p>
+
+    
+
+</body>
+</html>

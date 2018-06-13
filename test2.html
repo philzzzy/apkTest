@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+        
+
+        /*
+        */
+        #para1 {
+            background-color: aqua
+            }
+        
+
+        </style>
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+    
+    ' use strict'
+    var var1 = 12;
+    console.log(var1);
+    var1=15;
+
+        var direBonjour = function() {
+            alert("Hello world");
+        }
+
+    var var2 = {
+        "voiture": "Ford",
+        "action" : direBonjour
+
+    };
+
+    
+    var start = function () {
+        var tmp = document.getElementById('para2');
+        console.log(tmp);
+        console.log(tmp.innerText);
+        // tmp.innexText = "nouvelle valeur";
+        tmp.innerHTML = "nouvelle valeur";
+
+    }
+
+        // var2.action();
+
+    console.log(var2.voiture);
+
+                
+    function getData () {
+        
+        /*
+        const req = new XMLHttpRequest();
+        req.open('GET', 'http://iphdata.lequipe.fr/iPhoneDatas/EFR/STD/ALL/V2/home.json', false);
+        req.send(null);
+    */
+
+    $.ajax({
+        url: "http://iphdata.lequipe.fr/iPhoneDatas/EFR/STD/ALL/V2/home.json"
+    }).done(function (data) {
+        console.log(data);
+        for ( var i=0; data.articles.length; i++ ) {
+            $('#Contenu').append("<tr><td>"+data.articles[i].titre+"</td><td>"+data.articles[i].texte+"</tr>");
+        }
+    })
+    console.log('Après Ajax');
+
+
+            // if (req.status != 0) {
+            // console.log(req.responseText);
+
+            // Step1 transfiormer la chaine en objets
+            // var data = JSON.parse(req.responseText);
+            /*var contenu = "";
+                    
+                    console.log(data);
+
+                    // insérer les valeurs des articles
+                    for ( var i=0; data.articles.length; i++ ) {
+                        // console.log(data.articles[i].titre);
+                                                
+                        if ( ( data.articles[i].titre ) && ( data.articles[i].titre != undefined ) )  {
+                            contenu += data.articles[i].titre;
+                        }
+                    }
+                    
+                    console.log(contenu);
+                    // document.getElementById('Contenu').innerHTML = contenu;
+                    // document.getElementById('Contenu').innerText = contenu;
+        }
+        else {
+            console.log("pas de retour http");
+        }*/
+        
+    }
+    </script>
+
+
+    
+    
+    </head>
+
+<body >
+    <p style="background-color: blueviolet" onclick="getData()">Page header</p>
+    <p id='Contenu'> INITIAL </p>
+    <p style="background-color: blueviolet">Page footer</p>
+    
+
+</body>
+</html>
