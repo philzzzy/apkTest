@@ -2,19 +2,42 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
 
     <script src="libs/modernizr-custom.js"></script>
 
     <script type="text/javascript">
-        
+        function start() {
+            if (Modernizr.canvas) {
+                console.log("API canvas disponible");
+                try {
+                    var b_canvas = document.getElementById('id_canvas');
+                    var context = b_canvas.getContext("2d");
+                    for (var x=1; x<500; x+=10) {
+                        context.moveTo(x,0);
+                        context.lineTo(x,500);
+                        context.moveTo(0,x);
+                        context.lineTo(500,x);
+                    }
+                    // context.fillRect(50, 25, 150, 50);
+                    context.strokeStyle ="#000";
+                    context.stroke();
+                    console.log(b_canvas);
+                } catch (err) {
+                    alert(err);
+                }
+            } else {
+                console.error("API canvas non disponible")
+            }
+        }
+
     </script>
 
 </head>
 
-<body>
-
+<body onload="start()">
+    <canvas id="id_canvas"></canvas>
 </body>
 
 </html>

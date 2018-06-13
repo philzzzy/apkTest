@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+
+    <script src="libs/modernizr-custom.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("DOM chargé");
+
+            v = document.getElementById('v');
+
+            btnPlay = document.getElementById('play');
+            btnPlay.addEventListener('click', function () {
+                // console.log(v);
+                v.play();
+            });
+
+            btnPause = document.getElementById('pause');
+            btnPause.addEventListener('click', function () {
+                // console.log(v);
+                v.pause();
+            });
+
+            v.addEventListener('play', function () {
+                // Executé lorsque la video se jour
+                console.log('lecture');
+            });
+
+
+        });
+    </script>
+
+</head>
+
+
+<body>
+    <video width="320" height="240" id="v">
+        <source src="video.mp4" type="video/mp4"> Your browser does not support the video tag
+
+    </video>
+    <button id="play">LECTURE</button>
+    <button id="pause">PAUSE</button>
+    <canvas id='c' width="320" height="240"></canvas>
+
+</body>
+
+</html>
