@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
+    </head>
+    <body>
+        <div ng-app="myApp">
+            <div ng-controller="myCtrl">
+                Rechercher <input type="text" ng-model="search" />
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th ng-click="tri('titre')">Titre</th>
+                            <th ng-click="tri('texte')">Texte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="tmp in data | limitTo:offset | limitTo:-itemsPerPage | orderBy:coltosort:sens | filter:{'texte':search}"><td>{{tmp.titre | orsys:'-=':'=-'}}</td><td>{{tmp.texte}}</td></tr>
+                    </tbody>                    
+                </table>
+                <button ng-click="pagePrecedente()"><<</button>
+                <button ng-click="pageSuivante()">>></button>
+            </div>
+            
+        </div>
+        <script type="text/javascript">
+            'use strict'
+            var app = angular.module('myApp', []);
+
+            app.controller('myCtrl', ['$scope','lequipeService', function($scope, lequipeService){
+                $scope.offset = 5;
+                $scope.itemsPerPage = $scope.offset;
+                $scope.pagePrecedente = function(){
+                    if ($scope.offset>$scope.itemsPerPage)
+                        $scope.offset -= $scope.itemsPerPage;
+                }
+                $scope.pageSuivante = function() {
+                    $scope.offset += $scope.itemsPerPage;
+                };
+
+                $scope.sens = false;
+                $scope.tri = function(coltosort) {
+                    $scope.coltosort = coltosort;
+                    $scope.sens = !$scope.sens;
+                }
+                console.log('Starting myCtrl');
+                lequipeService.getData()
+                .then(function(data){
+                    $scope.data = data.data.articles;
+                });
+            }]);
+
+            app.filter('orsys', function(){
+                return function(param, param1, param2){
+                    return param1+param+param2;
+                }
+            });
+
+            app.service('lequipeService', ['$http','cache',function($http, cache){
+                this.getData = function() {
+                    return $http({
+                        method: 'GET',
+                        url: 'http://iphdata.lequipe.fr/iPhoneDatas/EFR/STD/ALL/V2/home.json'
+                    });
+                }
+                
+            }]);
+
+            app.service('cache', function() {
+
+            });
+        </script>
+    </body>
+</html>
