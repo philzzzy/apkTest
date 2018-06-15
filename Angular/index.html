@@ -41,8 +41,7 @@
                         <tr ng-repeat="tmp in data | limitTo:offset | limitTo:-itemsPerPage | orderBy:coltosort:sens | filter:{'texte':search}"><td>{{tmp.titre | orsys:'-=':'=-'}}</td><td>{{tmp.texte}}</td></tr>
                     </tbody>                    
                 </table>
-                <button ng-click="pagePrecedente()"><<</button>
-                <button ng-click="pageSuivante()">>></button>
+                <ul uib-pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></ul>
             </div>
             
         </div>
@@ -51,6 +50,16 @@
             var app = angular.module('myApp', ['ui.bootstrap']);
 
             app.controller('myCtrl', ['$scope','lequipeService', function($scope, lequipeService){
+                
+                $scope.currentPage = 1;
+
+                $scope.setPage = function (pageNo) {
+                    $scope.currentPage = pageNo;
+                };
+
+                $scope.pageChanged = function() {
+                    $scope.offset = $scope.currentPage*$scope.itemsPerPage;
+                };
                 $scope.alerts = [
                     { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
                     { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
@@ -65,13 +74,6 @@
                 };
                 $scope.offset = 5;
                 $scope.itemsPerPage = $scope.offset;
-                $scope.pagePrecedente = function(){
-                    if ($scope.offset>$scope.itemsPerPage)
-                        $scope.offset -= $scope.itemsPerPage;
-                }
-                $scope.pageSuivante = function() {
-                    $scope.offset += $scope.itemsPerPage;
-                };
 
                 $scope.sens = false;
                 $scope.tri = function(coltosort) {
@@ -82,6 +84,7 @@
                 lequipeService.getData()
                 .then(function(data){
                     $scope.data = data.data.articles;
+                    $scope.totalItems = $scope.data.length;
                 });
             }]);
 
